@@ -38,7 +38,7 @@
                     <input type="text" name="credit_card_last_digits_{{$row['user_id']}}" class="form-control"
                         value="{{$row['credit_card_last_digits']}}">
                 </div>
-                <div class="form-group demo-date-wrapper_{{$row['user_id']}}">
+                <div class="form-group demo-date-wrapper demo-date-wrapper_{{$row['user_id']}}">
                     <label>demo_expiration_date</label>
                     <input type="text" name="datepicker_{{$row['user_id']}}" class="expirationdate form-control"
                         id="datepicker_{{$row['user_id']}}" value="{{$row['demo_expiration_date']}}">
@@ -95,7 +95,7 @@
                     <input type="text" name="last_name_{{$row['user_id']}}" class="lastname form-control"
                         value="{{$row['last_name']}}">
                 </div>
-                <div class="form-group card-digits-wrapper_{{$row['user_id']}}">
+                <div class="form-group card-digits-wrapper card-digits-wrapper_{{$row['user_id']}}">
                     <label>Card Last Digits</label>
                     <input type="text" name="credit_card_last_digits_{{$row['user_id']}}" class="form-control"
                         value="{{$row['credit_card_last_digits']}}">

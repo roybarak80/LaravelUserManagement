@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $('#live-users-form >.demo-date-wrapper').hide();
+    $('#demo-users-form >.card-digits-wrapper').hide();
+
     $("form").each(function () {
 
 

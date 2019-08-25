@@ -14,8 +14,10 @@ class UserController extends Controller
         
         return view('layouts.showusers')->with('userDetails', $user_details);
     }
+
     
     //Save / Update user details
+
     public function save_user_details(Request $request)
     {
         try {
@@ -39,7 +41,7 @@ class UserController extends Controller
                 $user->email = $data['email'] ? $data['email'] : $user->email;
                 $user->first_name = $data['first_name'] ? $data['first_name'] : $user->first_name;
                 $user->last_name = $data['last_name'] ? $data['last_name'] : $user->last_name;
-                //$user->created_at = $data['created_at'] ? $data['created_at'] : $user->created_at;
+                $user->created_at = $data['created_at'] ? $data['created_at'] : $user->created_at;
                 $user->updated_at = date("Y-m-d H:i:s");
                 
                 $user->save();
@@ -51,7 +53,9 @@ class UserController extends Controller
         }
     }
 
+
     //Delete user
+
     public function delete_user(Request $request)
     {
         try {
@@ -66,12 +70,16 @@ class UserController extends Controller
         }
     }
 
-    //
+
+    // Navigate to AddUser Page
 
     public function add_user()
     {
         return view('layouts.adduser');
     }
+
+
+    // Store new user
 
     public function save_user(Request $request)
     {
@@ -79,9 +87,11 @@ class UserController extends Controller
             if (request()->ajax()) {
                 $lastUserId = User::where('user_id', '>', 0)->orderBy('user_id', 'desc')->get('user_id')->first()->toArray();
                
-                $user = new User ();
+                // initiate user model
+                $user = new User();
+                // collect all the data from the request
                 $data = Input::all();
-
+                // assigning the data to the user object
                 $user->user_id = intval($lastUserId['user_id'] + 1);
                 $user->user_type = $data['user_type'];
                 $user->email =$data['email'];
