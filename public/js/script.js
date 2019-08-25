@@ -59,7 +59,7 @@ $(document).ready(function () {
         })
 
         $('#delete_' + user_id).on('click', function () {
-            console.log(user_id)
+
             $.ajax({
                 url: '/api/delete_user',
                 type: "post",
@@ -92,7 +92,7 @@ $(document).ready(function () {
                 data: values,
                 dataType: 'JSON',
                 success: function (data) {
-                    /// location.reload();
+                    location.href = '/';
                 }
             });
 
