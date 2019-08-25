@@ -13,14 +13,13 @@ class User extends Authenticatable
         return $this->hasMany('\App\User'); //Product Model Name
     }
     use Notifiable;
-    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'user_id', 'email', 'password','user_type','first_name','last_name'
     ];
 
     /**

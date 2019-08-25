@@ -8,106 +8,93 @@ use App\User;
 
 class UserController extends Controller
 {
-
     public function print_details()
     {
         $user_details = User::all()->toArray();
         
         return view('layouts.showusers')->with('userDetails', $user_details);
-       
     }
+    
     //Save / Update user details
     public function save_user_details(Request $request)
     {
         try {
-            // get user_id
-            $user_id = $request['user_id'];
-     
-            // get relevant user object from DB
-            $user = User::select()
-                  ->where('user_id', '=', $user_id)
-                  ->get()->first();
-      
-            // if user has changed he's type then reset the opposite type to null      
-            if ($request['user_type'] == 'Demo') {
-                $user->credit_card_last_digits = null;
-                $user->demo_expiration_date = $request['demo_expiration_date'] ? date('Y-m-d', strtotime(str_replace('.', '/', $request['demo_expiration_date']))) : $user->demo_expiration_date;
-            }
+            if (request()->ajax()) {
+                $data = Input::all();
+                $user = User::where('user_id', $data['user_id'])->first();
+               
+                // if user has changed he's type then reset the opposite type to null
+                if ($data['user_type'] == 'Demo') {
+                    $user->credit_card_last_digits = null;
+                    $user->demo_expiration_date = $data['demo_expiration_date'] ? date('Y-m-d', strtotime(str_replace('.', '/', $data['demo_expiration_date']))) : $user->demo_expiration_date;
+                }
 
-            if ($request['user_type'] == 'Live') {
-                $user->demo_expiration_date = null;
-                $user->credit_card_last_digits = $request['credit_card_last_digits'] ? $request['credit_card_last_digits'] : $user->credit_card_last_digits;
+                if ($data['user_type'] == 'Live') {
+                    $user->demo_expiration_date = null;
+                    $user->credit_card_last_digits = $data['credit_card_last_digits'] ? $data['credit_card_last_digits'] : $user->credit_card_last_digits;
+                }
+               
+                // get all data from Ajax request
+                $user->user_type = $data['user_type'] ? $data['user_type'] : $user->user_type;
+                $user->email = $data['email'] ? $data['email'] : $user->email;
+                $user->first_name = $data['first_name'] ? $data['first_name'] : $user->first_name;
+                $user->last_name = $data['last_name'] ? $data['last_name'] : $user->last_name;
+                //$user->created_at = $data['created_at'] ? $data['created_at'] : $user->created_at;
+                $user->updated_at = date("Y-m-d H:i:s");
+                
+                $user->save();
+               
+                return response()->json(['status' => 200, 'message' => 'save success']);
             }
-
-            // get all data from Ajax request
-            $user->user_type = $request['user_type'] ? $request['user_type'] : $user->user_type;
-            $user->email = $request['email'] ? $request['email'] : $user->email;
-            $user->first_name = $request['first_name'] ? $request['first_name'] : $user->first_name;
-            $user->last_name = $request['last_name'] ? $request['last_name'] : $user->last_name;
-            $user->created_at = $request['created_at'] ? $request['created_at'] : $user->created_at;
-            $user->updated_at = date("Y-m-d H:i:s");
-            $user->save();
-            return response()->json(['status' => 200, 'message' => 'save success']);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
-        
     }
 
-     //Delete user
-     public function delete_user(Request $request){
+    //Delete user
+    public function delete_user(Request $request)
+    {
         try {
 
             // get the selected user's id
             $user_id = $request['user_id'];
-            User::where('user_id',$user_id)->delete();
+            User::where('user_id', $user_id)->delete();
 
             return response()->json(['status' => 200, 'message' => 'delete success']);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
- 
-     }
+    }
 
-     //
+    //
 
-     public function add_user(){
-       
+    public function add_user()
+    {
         return view('layouts.adduser');
-     }
+    }
 
-     public function save_user(Request $request){
-
+    public function save_user(Request $request)
+    {
         try {
-
             if (request()->ajax()) {
-
-                $lastUserId = User::where('user_id' ,'>' ,0)->orderBy('user_id', 'desc')->get('user_id')->first()->toArray();
-
-                
-                $user = new User;
+                $lastUserId = User::where('user_id', '>', 0)->orderBy('user_id', 'desc')->get('user_id')->first()->toArray();
+               
+                $user = new User ();
                 $data = Input::all();
-               $user->user_id = intval($lastUserId['user_id'] + 1);
-               $user->user_type = $data['user_type'];
-               $user->email = $data['email'];
-               $user->password = 'e10adc3949ba59abbe56e057f20f883e';
-               $user->first_name = $data['first_name'];
-               $user->last_name = $data['last_name'];
 
-
+                $user->user_id = intval($lastUserId['user_id'] + 1);
+                $user->user_type = $data['user_type'];
+                $user->email =$data['email'];
+                $user->password = md5($data['password']);
+                $user->first_name =$data['first_name'];
+                $user->last_name = $data['last_name'];
+               
                 $user->save();
-                if ($user > 0) {
-                    return response()->json('Success');
-                }
-               return response()->json(['status' => 200, 'message' => 'save success']);
+               
+                return response()->json(['status' => 200, 'message' => 'save success']);
             }
-
-           
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             echo $e->getMessage();
         }
-
-       
-        
-     }
+    }
 }

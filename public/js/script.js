@@ -42,7 +42,7 @@ $(document).ready(function () {
                 credit_card_last_digits: carddigits,
                 demo_expiration_date: demoexpirationdate,
             }
-
+            // console.log(ajaxDataObj);
             $.ajax({
                 url: '/api/save_user_details',
                 type: "post",
@@ -70,13 +70,12 @@ $(document).ready(function () {
 
 
 
-        $('#saveUser').on('click', function () {
-
+        $('#saveUser').on('click', function (e) {
+            e.preventDefault();
             var $inputs = $('#new-user-form :input');
 
             var values = {};
             $inputs.each(function () {
-                console.log(this.name);
                 if (this.name != '_token' && this.name.length > 0) {
                     values[this.name] = $(this).val();
                 }
@@ -89,7 +88,7 @@ $(document).ready(function () {
                 data: values,
                 dataType: 'JSON',
                 success: function (data) {
-                    //  location.reload();
+                    /// location.reload();
                 }
             });
 

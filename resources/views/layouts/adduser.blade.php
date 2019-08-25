@@ -4,7 +4,7 @@
 
 
         <div class="row form-group">
-            <div class="col-md-12">
+            <div class="col-sm-6 offset-sm-3">
                 {!! Form::open(array('url' => '/save_user', 'id' => 'new-user-form', 'role' =>'form')) !!}
                
                 <div class="form-group">
@@ -26,6 +26,11 @@
                         <option value="Live">Live</option>
                         <option value="Demo">Demo</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="text" name="password" class="form-control">
                 </div>
                 <div class="form-group">
                     <button  id="saveUser"

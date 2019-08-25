@@ -10669,3 +10669,8 @@ a.text-dark:focus {
   background-color: darkcyan;
 }
 
+.row-border {
+  border-bottom: 2px solid;
+  height: 50px;
+}
+

@@ -15,7 +15,7 @@
 
         <div class="row form-group">
             <div class="col-md-12">
-                {!! Form::open(array('url' => '/saveUserData', 'class' => 'subscribe-form', 'role' =>'form')) !!}
+                {!! Form::open(array('url' => '/saveUserData', 'id' => 'live-users-form', 'role' =>'form')) !!}
                 <h5>{{$row['first_name']}} {{$row['last_name']}} | {{$row['user_id']}}</h5>
                 <input type="text" name="user_id_{{$row['user_id']}}" class="userid" value="{{$row['user_id']}}" hidden>
                 <div class="form-group">
@@ -50,7 +50,7 @@
                         <option {{old('user_type',$row['user_type'])=="Demo"? 'selected':''}} value="Demo">Demo</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group row-border">
                     <input type="button" value="Save" id="submit_{{$row['user_id']}}"
                         class="btn btn-success pull-left ">
                     <input type="button" value="Delete" id="delete_{{$row['user_id']}}"
@@ -76,7 +76,7 @@
         @if ($row['user_type']==="Demo")
         <div class="row form-group">
             <div class="col-md-12">
-                {!! Form::open(array('url' => '/saveUserData', 'class' => 'subscribe-form', 'role' =>'form')) !!}
+                {!! Form::open(array('url' => '/saveUserData', 'id' => 'demo-users-form', 'role' =>'form')) !!}
 
                 <h5>{{$row['first_name']}} {{$row['last_name']}} | {{$row['user_id']}}</h5>
                 <input type="text" name="user_id_{{$row['user_id']}}" class="userid" value="{{$row['user_id']}}" hidden>
@@ -112,7 +112,7 @@
                         <option {{old('user_type',$row['user_type'])=="Demo"? 'selected':''}} value="Demo">Demo</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group row-border">
                     <input type="button" value="Save" id="submit_{{$row['user_id']}}"
                         class="btn btn-success pull-left ">
                     <input type="button" value="Delete" id="delete_{{$row['user_id']}}"
