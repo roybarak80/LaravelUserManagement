@@ -16,7 +16,7 @@
         <div class="row form-group">
             <div class="col-md-12">
                 {!! Form::open(array('url' => '/saveUserData', 'id' => 'live-users-form', 'role' =>'form')) !!}
-                <h5>{{$row['first_name']}} {{$row['last_name']}} | {{$row['user_id']}}</h5>
+                <h5>{{$row['first_name']}} {{$row['last_name']}} |  <span class="sub-title">User Id: {{$row['user_id']}}</span></h5>
                 <input type="text" name="user_id_{{$row['user_id']}}" class="userid" value="{{$row['user_id']}}" hidden>
                 <div class="form-group">
                     <label>Email address</label>
@@ -39,7 +39,7 @@
                         value="{{$row['credit_card_last_digits']}}">
                 </div>
                 <div class="form-group demo-date-wrapper demo-date-wrapper_{{$row['user_id']}}">
-                    <label>demo_expiration_date</label>
+                    <label>Demo Expiration Date</label>
                     <input type="text" name="datepicker_{{$row['user_id']}}" class="expirationdate form-control"
                         id="datepicker_{{$row['user_id']}}" value="{{$row['demo_expiration_date']}}">
                 </div>
@@ -78,7 +78,7 @@
             <div class="col-md-12">
                 {!! Form::open(array('url' => '/saveUserData', 'id' => 'demo-users-form', 'role' =>'form')) !!}
 
-                <h5>{{$row['first_name']}} {{$row['last_name']}} | {{$row['user_id']}}</h5>
+                <h5>{{$row['first_name']}} {{$row['last_name']}} | <span class="sub-title">User Id: {{$row['user_id']}}</span></h5>
                 <input type="text" name="user_id_{{$row['user_id']}}" class="userid" value="{{$row['user_id']}}" hidden>
                 <div class="form-group">
                     <label>Email address</label>
@@ -101,7 +101,7 @@
                         value="{{$row['credit_card_last_digits']}}">
                 </div>
                 <div class="form-group demo-date-wrapper_{{$row['user_id']}}">
-                    <label>demo_expiration_date</label>
+                    <label>Demo Expiration Date</label>
                     <input type="text" name="datepicker_{{$row['user_id']}}" class="expirationdate form-control"
                         id="datepicker_{{$row['user_id']}}" value="{{$row['demo_expiration_date']}}">
                 </div>

@@ -41,7 +41,7 @@ class UserController extends Controller
                 $user->email = $data['email'] ? $data['email'] : $user->email;
                 $user->first_name = $data['first_name'] ? $data['first_name'] : $user->first_name;
                 $user->last_name = $data['last_name'] ? $data['last_name'] : $user->last_name;
-                $user->created_at = $data['created_at'] ? $data['created_at'] : $user->created_at;
+                //$user->created_at = $data['created_at'] ? $data['created_at'] : $user->created_at;
                 $user->updated_at = date("Y-m-d H:i:s");
                 
                 $user->save();
@@ -59,12 +59,15 @@ class UserController extends Controller
     public function delete_user(Request $request)
     {
         try {
+            if (request()->ajax()) {
+                $data = Input::all();
+                // get the selected user's id
+                $user_id =$data['user_id'];
+            
+                User::where('user_id', $user_id)->delete();
 
-            // get the selected user's id
-            $user_id = $request['user_id'];
-            User::where('user_id', $user_id)->delete();
-
-            return response()->json(['status' => 200, 'message' => 'delete success']);
+                return response()->json(['status' => 200, 'message' => 'delete success']);
+            }
         } catch (\Exception $e) {
             echo $e->getMessage();
         }

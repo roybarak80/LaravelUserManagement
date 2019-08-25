@@ -9,7 +9,7 @@ $(document).ready(function () {
         var user_id = $(this).find('.userid').val();
 
         var submitButtonId = $(this).find(':input[type="button"]');
-        var deleteButton = $('#delete_' + user_id);
+
 
         $("select[name='user_type_" + user_id + "']").on('change', function () {
             if (this.value == 'Demo') {
@@ -58,9 +58,10 @@ $(document).ready(function () {
 
         })
 
-        deleteButton.on('click', function () {
+        $('#delete_' + user_id).on('click', function () {
+            console.log(user_id)
             $.ajax({
-                url: '/api/save_user',
+                url: '/api/delete_user',
                 type: "post",
                 data: { 'user_id': user_id },
                 dataType: 'JSON',
